@@ -1,11 +1,7 @@
 const input = require('readline-sync');
 const chalk = require('chalk');
 
-// TODO 2: modify your quiz app to ask 5 questions //
-
-// TODO 1.1a: Define candidateName // 
 let candidateName = "";
-// TODO 1.2a: Define question, correctAnswer, and candidateAnswer //
 let question;
 let correctAnswer;
 let candidateAnswer;
@@ -15,28 +11,36 @@ let candidateAnswers;
 
 
 function askForName() {
-  // TODO 1.1b: Ask for candidate's name //
   return input.question("What is your name? ");
 }
 
 function askQuestion(question) {
-  // TODO 1.2b: Ask candidate the question and assign the response as candidateAnswer //
   return input.question(question);
 }
 
+/*
+  gradeQuestion : Checks for equivalency between the submitted candidate answer & the correctAnswer
+    returns: true OR false
+*/
 function gradeQuestion(candidateAnswer, correctAnswer) {
   return (candidateAnswer).toLowerCase() === correctAnswer.toLowerCase(); //questionGrade
 }
 
+/*
+  gradeQuiz: Checks the amount of questions user answered correctly
+             Finds the percentage grade
+             Get the Status
+    returns an array of the grade, responsesCorrect, amtOfQuestions, and Status( pass or fail )
+*/
 function gradeQuiz(candidateAnswers) {
-  // console.log(candidateAnswers)
+
   let responsesCorrect = 0;
   for (let i = 0; i < questions.length; i++) {
     if (gradeQuestion(candidateAnswers[i], correctAnswers[i])) {
       responsesCorrect++;
     }
   }
-  // console.log(responsesCorrect)
+
   let grade = (responsesCorrect / questions.length) * 100
   let status;
   if (grade >= 80) {
@@ -46,31 +50,9 @@ function gradeQuiz(candidateAnswers) {
   }
 
   return [grade, responsesCorrect, questions.length, status];
-
-
-  // console.log(candidateAnswers[0] === "jace")
-
-  // for (let i = 0; i < questions.length; i++) {
-  //   console.log(`${questions[i]}?`);
-  //   console.log(` Answer: ${gradeQuestion(candidateAnswers[i], correctAnswers[i])}`)
-
-  // }
-
-  // TODO 1.2c: Let the candidate know if they have answered the question correctly or incorrectly // 
-  // if (candidateAnswers === "Sally Ride") {
-  //   return "That was correct!";
-  // } else {
-  //   return "That was not right...";
-  // }
-
-  // let grade;
-
-
-  // return grade;
 }
 
 function runProgram() {
-  // TODO 1.1c: Ask for candidate's name //
   candidateName = askForName();
   correctAnswers = ["Sally Ride", "true", "40", "Trajectory", "45"];
   questions = [
@@ -81,17 +63,14 @@ function runProgram() {
     "5) What is the minimum crew size for the ISS? "
   ]
   candidateAnswers = [];
+
+  // Loop : Asks user a question from the question array and pushes the answer to the candidateAnswers Arr
+  // Displays: Your Answer, Correct Answer (does not check for correctness)
   for (let i = 0; i < questions.length; i++) {
     candidateAnswers.push(askQuestion(questions[i]));
     console.log(`Your Answer: ${candidateAnswers[i]}`);
     console.log(`Correct Answer: ${correctAnswers[i]}\n`);
   }
-
-  // DEBUG CANDIDATE ANSWERS //
-  // candidateAnswers = ["sally ride", "True", "3", "trajectory", "45"]
-
-
-  // console.log(candidateAnswers)
 
   let quizResults = gradeQuiz(candidateAnswers, correctAnswers);
   console.log(`>>> Overall Grade: ${quizResults[0]}% (${quizResults[1]} of ${quizResults[2]} responses correct) <<<`);
