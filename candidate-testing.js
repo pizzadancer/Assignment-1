@@ -24,40 +24,78 @@ function askQuestion(question) {
   return input.question(question);
 }
 
+function gradeQuestion(candidateAnswer, correctAnswer) {
+  return (candidateAnswer).toLowerCase() === correctAnswer.toLowerCase(); //questionGrade
+}
+
 function gradeQuiz(candidateAnswers) {
   // console.log(candidateAnswers)
-  console.log(chalk.cyan.underline("Quiz Results\n"));
-
-  // TODO 1.2c: Let the candidate know if they have answered the question correctly or incorrectly // 
-  if (candidateAnswers === "Sally Ride") {
-    return "That was correct!";
+  let responsesCorrect = 0;
+  for (let i = 0; i < questions.length; i++) {
+    if (gradeQuestion(candidateAnswers[i], correctAnswers[i])) {
+      responsesCorrect++;
+    }
+  }
+  // console.log(responsesCorrect)
+  let grade = (responsesCorrect / questions.length) * 100
+  let status;
+  if (grade >= 80) {
+    status = "PASSED";
   } else {
-    return "That was not right...";
+    status = "FAILED";
   }
 
-  let grade;
+  return [grade, responsesCorrect, questions.length, status];
 
 
-  return grade;
+  // console.log(candidateAnswers[0] === "jace")
+
+  // for (let i = 0; i < questions.length; i++) {
+  //   console.log(`${questions[i]}?`);
+  //   console.log(` Answer: ${gradeQuestion(candidateAnswers[i], correctAnswers[i])}`)
+
+  // }
+
+  // TODO 1.2c: Let the candidate know if they have answered the question correctly or incorrectly // 
+  // if (candidateAnswers === "Sally Ride") {
+  //   return "That was correct!";
+  // } else {
+  //   return "That was not right...";
+  // }
+
+  // let grade;
+
+
+  // return grade;
 }
 
 function runProgram() {
   // TODO 1.1c: Ask for candidate's name //
   candidateName = askForName();
+  correctAnswers = ["Sally Ride", "true", "40", "Trajectory", "45"];
   questions = [
-    "Who was the first American woman in space? ",
-    "True or false: 5000 meters = 5 kilometers.",
-    "(5 + 3)/2 * 10 = ?",
-    "Given the array [8, 'Orbit', 'Trajectory', 45], what entry is at index 2?",
-    "What is the minimum crew size for the ISS?"
+    "1) Who was the first American woman in space? ",
+    "2) True or false: 5000 meters = 5 kilometers. ",
+    "3) (5 + 3)/2 * 10 = ? ",
+    "4) Given the array [8, 'Orbit', 'Trajectory', 45], what entry is at index 2? ",
+    "5) What is the minimum crew size for the ISS? "
   ]
   candidateAnswers = [];
-  for (let i = 0; i < questions.length; i++) {
-    candidateAnswers.push(askQuestion(questions[i]));
-  }
+  // for (let i = 0; i < questions.length; i++) {
+  //   candidateAnswers.push(askQuestion(questions[i]));
+  //   console.log(`Your Answer: ${candidateAnswers[i]}`);
+  //   console.log(`Correct Answer: ${correctAnswers[i]}\n`);
+  // }
+
+  // DEBUG CANDIDATE ANSWERS //
+  candidateAnswers = ["sally ride", "True", "3", "trajectory", "45"]
+
+
   // console.log(candidateAnswers)
 
-  gradeQuiz(this.candidateAnswers);
+  let quizResults = gradeQuiz(candidateAnswers, correctAnswers);
+  console.log(`>>> Overall Grade: ${quizResults[0]}% (${quizResults[1]} of ${quizResults[2]} responses correct) <<<`);
+  console.log(`>>> Status: ${quizResults[3]} <<<`)
 
 }
 
