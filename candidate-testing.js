@@ -26,34 +26,41 @@ function gradeQuestion(candidateAnswer, correctAnswer) {
   return (candidateAnswer).toLowerCase() === correctAnswer.toLowerCase(); //questionGrade
 }
 
+
+
+
 /*
   gradeQuiz: Checks the amount of questions user answered correctly
              Finds the percentage grade
              Gets the Status
     returns an array of the grade, responsesCorrect, amtOfQuestions, and Status( pass or fail )
 */
-function gradeQuiz(candidateAnswers) {
+function gradeQuiz(candidateAnswers, correctAnswers) {
+  let quiz = {
+    grade: 0,
+    responsesCorrect: 0,
+    amtOfQuestions: 5,
+    status: ""
+  };
+
 
   // Checks the amount of questions user answered correctly
-  let responsesCorrect = 0;
-  for (let i = 0; i < questions.length; i++) {
+  for (let i = 0; i < quiz.amtOfQuestions; i++) {
     if (gradeQuestion(candidateAnswers[i], correctAnswers[i])) {
-      responsesCorrect++;
+      quiz.responsesCorrect += 1;
     }
   }
 
   // Finds the percentage grade
-  let grade = (responsesCorrect / questions.length) * 100
-  let status;
+  quiz.grade = (quiz.responsesCorrect / quiz.amtOfQuestions) * 100
 
   // Gets the Status
-  if (grade >= 80) {
-    status = "PASSED";
+  if (quiz.grade >= 80) {
+    quiz.status = "PASSED";
   } else {
-    status = "FAILED";
+    quiz.status = "FAILED";
   }
-
-  return [grade, responsesCorrect, questions.length, status];
+  return quiz;
 }
 
 function runProgram() {
@@ -77,12 +84,12 @@ function runProgram() {
   }
 
   let quizResults = gradeQuiz(candidateAnswers, correctAnswers);
-  console.log(`>>> Overall Grade: ${quizResults[0]}% (${quizResults[1]} of ${quizResults[2]} responses correct) <<<`);
-  console.log(`>>> Status: ${quizResults[3]} <<<`)
+  console.log(`>>> Overall Grade: ${quizResults.grade}% (${quizResults.responsesCorrect} of ${quizResults.amtOfQuestions} responses correct) <<<`);
+  console.log(`>>> Status: ${quizResults.status} <<<`)
 
 }
 
-// Don't write any code below this line //
+// Don't write any code below quiz line //
 // And don't change these or your program will not run as expected //
 module.exports = {
   candidateName: candidateName,
