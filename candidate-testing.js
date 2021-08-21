@@ -81,14 +81,14 @@ function runProgram() {
     "5) What is the minimum crew size for the ISS? "
   ]
   candidateAnswers = [];
-  // for (let i = 0; i < questions.length; i++) {
-  //   candidateAnswers.push(askQuestion(questions[i]));
-  //   console.log(`Your Answer: ${candidateAnswers[i]}`);
-  //   console.log(`Correct Answer: ${correctAnswers[i]}\n`);
-  // }
+  for (let i = 0; i < questions.length; i++) {
+    candidateAnswers.push(askQuestion(questions[i]));
+    console.log(`Your Answer: ${candidateAnswers[i]}`);
+    console.log(`Correct Answer: ${correctAnswers[i]}\n`);
+  }
 
   // DEBUG CANDIDATE ANSWERS //
-  candidateAnswers = ["sally ride", "True", "3", "trajectory", "45"]
+  // candidateAnswers = ["sally ride", "True", "3", "trajectory", "45"]
 
 
   // console.log(candidateAnswers)
