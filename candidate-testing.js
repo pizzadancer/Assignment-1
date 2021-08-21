@@ -26,9 +26,6 @@ function gradeQuestion(candidateAnswer, correctAnswer) {
   return (candidateAnswer).toLowerCase() === correctAnswer.toLowerCase(); //questionGrade
 }
 
-
-
-
 /*
   gradeQuiz: Checks the amount of questions user answered correctly
              Finds the percentage grade
@@ -37,12 +34,21 @@ function gradeQuestion(candidateAnswer, correctAnswer) {
 */
 function gradeQuiz(candidateAnswers, correctAnswers) {
   let quiz = {
-    grade: 0,
     responsesCorrect: 0,
     amtOfQuestions: 5,
-    status: ""
-  };
 
+    // Finds the percentage grade
+    grade: function () { return (this.responsesCorrect / this.amtOfQuestions) * 100 },
+
+    // Gets the Status
+    status: function () {
+      if (this.grade() >= 80) {
+        return "PASSED";
+      } else {
+        return "FAILED";
+      }
+    }
+  };
 
   // Checks the amount of questions user answered correctly
   for (let i = 0; i < quiz.amtOfQuestions; i++) {
@@ -51,21 +57,11 @@ function gradeQuiz(candidateAnswers, correctAnswers) {
     }
   }
 
-  // Finds the percentage grade
-  quiz.grade = (quiz.responsesCorrect / quiz.amtOfQuestions) * 100
-
-  // Gets the Status
-  if (quiz.grade >= 80) {
-    quiz.status = "PASSED";
-  } else {
-    quiz.status = "FAILED";
-  }
   return quiz;
 }
 
 function runProgram() {
   candidateName = askForName();
-  correctAnswers = ["Sally Ride", "true", "40", "Trajectory", "45"];
   questions = [
     "1) Who was the first American woman in space? ",
     "2) True or false: 5000 meters = 5 kilometers. ",
@@ -73,6 +69,7 @@ function runProgram() {
     "4) Given the array [8, 'Orbit', 'Trajectory', 45], what entry is at index 2? ",
     "5) What is the minimum crew size for the ISS? "
   ]
+  correctAnswers = ["Sally Ride", "true", "40", "Trajectory", "45"];
   candidateAnswers = [];
 
   // Loop : Asks user a question from the question array and pushes the answer to the candidateAnswers Arr
@@ -84,8 +81,8 @@ function runProgram() {
   }
 
   let quizResults = gradeQuiz(candidateAnswers, correctAnswers);
-  console.log(`>>> Overall Grade: ${quizResults.grade}% (${quizResults.responsesCorrect} of ${quizResults.amtOfQuestions} responses correct) <<<`);
-  console.log(`>>> Status: ${quizResults.status} <<<`)
+  console.log(`>>> Overall Grade: ${quizResults.grade()}% (${quizResults.responsesCorrect} of ${quizResults.amtOfQuestions} responses correct) <<<`);
+  console.log(`>>> Status: ${quizResults.status()} <<<`)
 
 }
 
