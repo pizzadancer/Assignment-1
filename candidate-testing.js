@@ -29,11 +29,12 @@ function gradeQuestion(candidateAnswer, correctAnswer) {
 /*
   gradeQuiz: Checks the amount of questions user answered correctly
              Finds the percentage grade
-             Get the Status
+             Gets the Status
     returns an array of the grade, responsesCorrect, amtOfQuestions, and Status( pass or fail )
 */
 function gradeQuiz(candidateAnswers) {
 
+  // Checks the amount of questions user answered correctly
   let responsesCorrect = 0;
   for (let i = 0; i < questions.length; i++) {
     if (gradeQuestion(candidateAnswers[i], correctAnswers[i])) {
@@ -41,8 +42,11 @@ function gradeQuiz(candidateAnswers) {
     }
   }
 
+  // Finds the percentage grade
   let grade = (responsesCorrect / questions.length) * 100
   let status;
+
+  // Gets the Status
   if (grade >= 80) {
     status = "PASSED";
   } else {
